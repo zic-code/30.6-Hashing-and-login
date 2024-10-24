@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+<p>"/users/{{user.username}}/feedback/add" </p>
+
+<form>
+  {{form.hidden_tag()}}
+
+  {% for field in form.errors %}
+  <div class="alert alert-danger">{{ field }}:
+    <ul>
+      {% for error in form.errors[field] %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+
+  {% for field in form if field.widget.input_type != 'hidden' %}
+
+  <div class="form-group row">
+    {{field.label(class="col-sm-2 col-form-label")}}
+    <div class="col-sm-10">
+      {{field(class="form-control")}}
+    </div>
+  </div>
+
+  {% endfor %}
+
+  <button formaction="/users/{{ user.username }}/feedback/add" formmethod="post" type="submit"
+    class="btn btn-primary">Add!</button>
+</form>
+
+{% endblock %}
